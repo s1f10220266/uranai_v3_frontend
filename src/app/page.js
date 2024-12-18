@@ -10,6 +10,17 @@ export default function Home() {
     setAction(n);
   };
 
+  const handleGoogleLogin = (res) => {
+    const jwtToken = res.credential;
+    fetch("https://uranai-backend-v3.onrender.com/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ token: jwtToken }),
+    })
+  }
+
   return (
     <>
       <div className="flex flex-col items-center space-y-6">
@@ -85,6 +96,25 @@ export default function Home() {
             </>
           )}
         </div>
+
+        <div id="g_id_onload"
+            data-client_id="963720505976-ej0q44199dea39vh2htg1q0mk414ftkl.apps.googleusercontent.com"
+            data-context="signin"
+            data-ux_mode="popup"
+            data-callback="handleGoogleLogin"
+            data-auto_prompt="false">
+        </div>
+
+        <div class="g_id_signin"
+            data-type="standard"
+            data-shape="pill"
+            data-theme="filled_blue"
+            data-text="signin_with"
+            data-size="large"
+            data-logo_alignment="left">
+        </div>
+
+
         <Link href="/start" className="group relative inline-flex h-[calc(48px+8px)] items-center justify-center rounded-full bg-neutral-950 py-1 pl-6 pr-14 font-medium text-neutral-50">
           <span className="z-10 pr-2">URANAIを始める！</span>
           <div className="absolute right-1 inline-flex h-12 w-12 items-center justify-end rounded-full bg-neutral-700 transition-[width] group-hover:w-[calc(100%-8px)]">
@@ -108,6 +138,7 @@ export default function Home() {
           </div>
         </Link>
       </div>
+      <script src="https://accounts.google.com/gsi/client" async></script>
     </>
   );
 }
