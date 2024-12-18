@@ -8,8 +8,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        background: "var(--background)", // カスタムCSS変数
+        foreground: "var(--foreground)", // カスタムCSS変数
       },
     },
   },
