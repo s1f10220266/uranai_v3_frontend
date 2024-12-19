@@ -10,7 +10,7 @@ export default function TopBar() {
 
   return (
     <div className="bg-gray-400 h-12 flex items-center justify-between px-4 border-b border-black">
-      <h1 className="text-white font-bold text-lg">URANAI</h1>
+      <h1 className="text-white font-bold text-2xl">URANAI</h1>
       <div className="space-y-1 cursor-pointer" onClick={toggleSidebar}>
         <div className="w-6 h-0.5 bg-gray-700"></div>
         <div className="w-6 h-0.5 bg-gray-700"></div>

@@ -26,17 +26,28 @@ export default function Home() {
     <div>
       <TopBar />
       <>
-        <div className="flex flex-col items-center space-y-6">
+        <div className="flex flex-col items-center justify-center min-h-screen">
           {/* タイトル */}
-          {/*<h1 className="text-2xl font-bold">URANAI</h1>*/}
+          <h1 className="text-8xl font-bold text-center mb-8">URAN<span className="text-blue-500">AI</span></h1>
 
           {/* 説明文 */}
-          <div className="text-center">
-            "URANAI"は、近年注目されている生成AIを活用した就活サービスです。<br />
-            現在も開発中のサービスです！お楽しみいただけたら幸いです！<br />
-          </div>
+          <ul className="text-2xl text-center space-y-4 mb-10">
+            <li className="flex justify-center mr-14">
+              <span className="w-10 text-right">1.</span>
+              <span className="pl-2">質問に回答</span>
+            </li>
+            <li className="flex justify-center ml-10">
+              <span className="w-10 text-right">2.</span>
+              <span className="pl-2">なりたい職業を入力</span>
+            </li>
+            <li className="flex justify-center mr-2">
+              <span className="w-10 text-right">3.</span>
+              <span className="pl-2">適工具合を診断</span>
+            </li>
+          </ul>
 
-          {/* ボタン */}
+          {/*
+          // ボタン 
           <div className="inline-flex rounded-md shadow">
             <button
               className="px-4 py-2 bg-blue-500 text-white rounded-l-md hover:bg-blue-600"
@@ -57,8 +68,10 @@ export default function Home() {
               開発者について
             </button>
           </div>
+          */}
 
-          {/* 選択されたコンテンツ */}
+          {/*
+          // 選択されたコンテンツ
           <div className="w-full max-w-2xl text-center">
             {action === "abouturanai" && (
               <div>
@@ -99,6 +112,7 @@ export default function Home() {
               </>
             )}
           </div>
+          */}
 
           <div id="g_id_onload"
               data-client_id="963720505976-ej0q44199dea39vh2htg1q0mk414ftkl.apps.googleusercontent.com"
@@ -119,7 +133,7 @@ export default function Home() {
 
 
 
-          <Link href="/start" className="group relative inline-flex h-[calc(48px+8px)] items-center justify-center rounded-full bg-neutral-950 py-1 pl-6 pr-14 font-medium text-neutral-50">
+          <Link href="/start" className="group relative inline-flex h-[calc(48px+8px)] items-center justify-center rounded-full bg-neutral-950 py-1 pl-6 pr-14 font-medium text-neutral-50 my-4">
             <span className="z-10 pr-2">URANAIを始める！</span>
             <div className="absolute right-1 inline-flex h-12 w-12 items-center justify-end rounded-full bg-neutral-700 transition-[width] group-hover:w-[calc(100%-8px)]">
               <div className="mr-3.5 flex items-center justify-center">
