@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import TopBar from '../components/TopBar';
 import { useAuth } from "../contexts/AuthContext";
 
 export default function Start() {
@@ -83,13 +84,9 @@ const { user, isLoggedIn } = useAuth();
     };
   return (
     <>
+    <TopBar />
       <div className="flex flex-col items-center space-y-6">
-        <h1>URANAI</h1>
         <div>こんにちは、{user ? user.accountName: "ゲスト"}</div>
-        <div className='grid grid-cols-1 sm:grid-cols-2 gap-10'>
-          <div className='col-span-1'>col1</div>
-          <img className='col-span-1 w-1/2 sm:w-full' src="/img/uranaiCat.jpg" alt="ようこそ" />
-        </div>
 
         <div>まずは質問数を選んで、質問に回答してください！</div>
 

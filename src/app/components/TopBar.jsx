@@ -1,16 +1,18 @@
 import { useState } from 'react';
+import Link from 'next/link';
 
-export default function TopBar() {
+export default function TopBar({ onLoginClick }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // サイドバーを開閉する関数
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
   return (
-    <div className="bg-gray-400 h-12 flex items-center justify-between px-4 border-b border-black">
-      <h1 className="text-white font-bold text-2xl">URANAI</h1>
+    <div className="bg-gray-400 h-16 flex items-center justify-between px-4 border-b border-black">
+      <h1 className="text-white font-bold text-4xl">
+        <Link href="/">URANAI</Link>
+      </h1>
       <div className="space-y-1 cursor-pointer" onClick={toggleSidebar}>
         <div className="w-6 h-0.5 bg-gray-700"></div>
         <div className="w-6 h-0.5 bg-gray-700"></div>
@@ -19,20 +21,50 @@ export default function TopBar() {
 
       {/* サイドバーの表示制御 */}
       {isSidebarOpen && (
-        <div className="fixed top-0 right-0 w-64 h-full bg-gray-400 text-white p-4">
+        <div className="fixed top-0 right-0 w-64 h-full bg-gray-200 text-gray-800 shadow-lg p-4">
           <button
-            className="absolute top-4 right-4 text-white text-xl"
+            className="absolute top-4 right-4 text-gray-800 text-xl"
             onClick={toggleSidebar}
           >
             ×
           </button>
-          <ul>
-            <li className="mb-4">URANAIの使い方</li>
-            <li className="mb-4">URANAIとは？</li>
-            <li className="mb-4">開発者について</li>
-            <li className="mb-4">性格診断方法について</li>
-            <li className="mb-4">MBTIの種類</li>
+          <div className="text-center font-bold text-lg mb-4">
+            <Link href="/">URANAIをはじめる</Link>
+          </div>
+          <ul className="space-y-4">
+            <li className="border-b border-gray-300 pb-2">
+              <Link href="/">URANAIとは？</Link>
+            </li>
+            <li className="border-b border-gray-300 pb-2">
+              <Link href="/">URANAIの使い方</Link>
+            </li>
+            <li className="border-b border-gray-300 pb-2">
+              <Link href="/">性格診断方法について</Link>
+            </li>
+            <li className="border-b border-gray-300 pb-2">
+              <Link href="/">性格タイプの種類</Link>
+            </li>
+            <li className="border-b border-gray-300 pb-2">
+              <Link href="/">開発者について</Link>
+            </li>
           </ul>
+          <div className="mt-6 flex flex-col items-center">
+            <button onClick={() => {
+                toggleSidebar();
+                onLoginClick();
+              }} className="flex items-center justify-center w-48 py-2 bg-blue-300 text-black rounded shadow hover:bg-gray-400 mb-4">
+              <span className="mr-2">👤</span>ログイン
+            </button>
+            {/* <button className="flex items-center justify-center w-48 py-2 bg-gray-300 text-black rounded shadow hover:bg-gray-400 mb-4">
+              <span className="mr-2">👤</span> <Link href="/login" className="text-blue-500 underline hover:text-blue-700">ログイン</Link>
+            </button> */}
+            <button className="flex items-center justify-center w-48 py-2 bg-blue-300 text-black rounded shadow hover:bg-blue-400">
+              <span className="mr-2">👤</span> <Link href="/account" className="text-blue-500 underline hover:text-blue-700">サインイン</Link>
+            </button>
+            {/* <button className="flex items-center justify-center w-48 py-2 bg-blue-300 text-black rounded shadow hover:bg-blue-400">
+              <span className="mr-2">👤</span> <Link href="/account" className="text-blue-500 underline hover:text-blue-700">サインイン</Link>
+            </button> */}
+          </div>
         </div>
       )}
     </div>
