@@ -3,24 +3,56 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import TopBar from './components/TopBar';
+import { useAuth } from "./contexts/AuthContext";
 
 export default function Home() {
   const [action, setAction] = useState(null);
+  const [loginSuccess, setLoginSuccess] = useState(false);
+  const [loginError, setLoginError] = useState("");
+  const [loginName, setLoginName] = useState("");
+  const [loginPass, setLoginPass] = useState("");
+  const { login } = useAuth();
 
   const handleIntroBtnClick = (n) => {
     setAction(n);
   };
 
-  const handleGoogleLogin = (res) => {
-    const jwtToken = res.credential;
-    fetch("https://uranai-backend-v3.onrender.com/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ token: jwtToken }),
-    })
+  const handleLogin = async (e) => {
+    e.preventDefault(); // ページ遷移を防ぐ
+    setLoginError(""); // エラーメッセージをリセット
+    setLoginSuccess(""); // 成功メッセージをリセット
+
+    // フロントエンドで入力データをバリデーション
+    if (!loginName || !loginPass) {
+        setLoginError("ニックネームとパスワードを入力してください。");
+        return;
+    }
+    // console.log("Sending data:", { name: loginName, password: loginPass });
+    try {
+      const response = await fetch("https://uranai-backend-v3.onrender.com/api/login", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name: loginName, password: loginPass }),
+      });
+  
+      console.log("Raw response:", response);
+  
+      const result = await response.json(); // ここで例外が発生する可能性あり
+      console.log("Parsed response JSON:", result);
+  
+      if (response.ok && result.loginSuccess) {
+          login({accountName: loginName});
+          setLoginSuccess("ログインしました！");
+      } else {
+          setLoginError(result.error + "ログインに失敗しました。ニックネームとあいことばを確認してください。");
+      }
+  } catch (error) {
+      console.error("Catch block triggered:", error);
+      setLoginError("エラーが発生しました。ログインできません。");
   }
+};
 
   return (
     <div>
@@ -42,96 +74,34 @@ export default function Home() {
             </li>
             <li className="flex justify-center mr-2">
               <span className="w-10 text-right">3.</span>
-              <span className="pl-2">適工具合を診断</span>
+              <span className="pl-2">適正具合を診断</span>
             </li>
           </ul>
 
-          {/*
-          // ボタン 
-          <div className="inline-flex rounded-md shadow">
-            <button
-              className="px-4 py-2 bg-blue-500 text-white rounded-l-md hover:bg-blue-600"
-              onClick={() => handleIntroBtnClick("abouturanai")}
-            >
-              URANAIとは？
-            </button>
-            <button
-              className="px-4 py-2 bg-blue-500 text-white hover:bg-blue-600"
-              onClick={() => handleIntroBtnClick("howtouranai")}
-            >
-              URANAIのはじめ方
-            </button>
-            <button
-              className="px-4 py-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600"
-              onClick={() => handleIntroBtnClick("aboutus")}
-            >
-              開発者について
-            </button>
-          </div>
-          */}
+          <form onSubmit={handleLogin}>
+            <div>ログインして始める</div>
+            <label htmlFor="name">ニックネーム</label>
+            <input type='text' 
+              id='name' 
+              placeholder='UranaiCatちゃん' 
+              value={loginName} 
+              onChange={(e) => setLoginName(e.target.value)} />
+            <label htmlFor="password">あいことば</label>
+            <input type='password' 
+              id='password' 
+              placeholder='' 
+              value={loginPass} 
+              onChange={(e) => setLoginPass(e.target.value)}/>
+            <button type='submit'>ログインする</button>
+          </form>
+          {/* エラーメッセージ */}
+          {loginError && <div style={{ color: "red" }}>{loginError}</div>}
 
-          {/*
-          // 選択されたコンテンツ
-          <div className="w-full max-w-2xl text-center">
-            {action === "abouturanai" && (
-              <div>
-                URANAIとは、ChatGPT-4o miniを活用した就活を支援するWebアプリです。<br />
-                調査を行った結果、"早期離職"が社会問題となっていることがわかりました。<br />
-                データから見ても、およそ3割の人が3年以内に離職しており、<br />
-                また、退職した理由としては、"仕事が自分に合わない"が全体の4割と最も多いことがわかりました。<br />
-                そこで私たちは、柔軟な生成力、分析力をもつ生成AIを活用し、最終的にミスマッチを減らすことを目的としたURANAIの開発を始めました。<br />
-                URANAIの名前の由来は、生成AIの"<span className="ai">AI</span>"と、"将来を占うようなアプリ"をもじって考案しました^^。
-              </div>
-            )}
-            {action === "howtouranai" && (
-              <div>
-                URANAIでは、まず、性格診断を行います。<br />
-                性格診断の結果は最近話題の16タイプでお返しします。<br />
-                その後、あなたのなりたい職業をお聞きします。<br />
-                あなたの性格と、なりたい職業から、有名占い師のuranaiCatさんが将来のシナリオを作成してくれます。<br />
-                シナリオには、あなたが希望する職業に就いた際に、どうなるのか書かれています。<br />
-                uranaiCatさんの占いでも、アタリ・ハズレはあるので参考程度にお読みください。<br />
-                <strong className="intro-ul">1. 質問数を選択し、質問に回答</strong><br />
-                <strong className="intro-ul">2. 性格タイプを確認し、なりたい職業を入力</strong><br />
-                <strong className="intro-ul">3. 占いを開始する</strong><br />
-                <strong className="intro-ul">4. uranaiCatさんのシナリオを読む</strong><br />
-              </div>
-            )}
-            {action === "aboutus" && (
-              <>
-                <strong className="intro-title">開発者について</strong>
-                <div className="intro-text">以下のサイトにアプリや、チームの紹介をまとめております。</div>
-                <a
-                  className="intro-text text-blue-500 hover:underline"
-                  href="https://sites.google.com/iniad.org/1002/%E3%83%9B%E3%83%BC%E3%83%A0"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Google Site
-                </a>
-              </>
-            )}
-          </div>
-          */}
-
-          <div id="g_id_onload"
-              data-client_id="963720505976-ej0q44199dea39vh2htg1q0mk414ftkl.apps.googleusercontent.com"
-              data-context="signin"
-              data-ux_mode="popup"
-              data-callback="handleGoogleLogin"
-              data-auto_prompt="false">
-          </div>
-
-          <div className="g_id_signin"
-              data-type="standard"
-              data-shape="pill"
-              data-theme="filled_blue"
-              data-text="signin_with"
-              data-size="large"
-              data-logo_alignment="left">
-          </div>
+          {/* 成功メッセージ */}
+          {loginSuccess && <div style={{ color: "green" }}>{loginSuccess}</div>}
 
 
+          <Link href="/account">アカウントを作成する</Link>
 
           <Link href="/start" className="group relative inline-flex h-[calc(48px+8px)] items-center justify-center rounded-full bg-neutral-950 py-1 pl-6 pr-14 font-medium text-neutral-50 my-4">
             <span className="z-10 pr-2">URANAIを始める！</span>
@@ -156,7 +126,6 @@ export default function Home() {
             </div>
           </Link>
         </div>
-        <script src="https://accounts.google.com/gsi/client" async></script>
       </>
     </div>
   );

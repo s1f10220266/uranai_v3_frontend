@@ -2,14 +2,14 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Start() {
-  const apiUrl = "https://uranai-iniad.onrender.com";
-  const typeApiUrl = `${apiUrl}/api/type`;
+const typeAPI = "https://uranai-backend-v3.onrender.com/api/type";
+const { user, isLoggedIn } = useAuth();
 
   const [selectedNumber, setSelectedNumber] = useState(0);
   // const navigate = useNavigate();  // useNavigate フックに変更
-
     // 質問内容
     const questions = {
         e_or_i: [
@@ -62,28 +62,30 @@ export default function Start() {
         });
     
         try {
-            const response = await fetch(typeApiUrl, {
+            const resp = await fetch(typeAPI, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(answers),
             });
-            const result = await response.json();
+
+            const result = await resp.json();
+
             if (result.ready) {
-                console.log("診断完了");
-                // router.push('/'); //
+                console.log("診断が完了しました");
+            } else {
+                console.log("診断に失敗しました");
             }
-        } catch (error) {
-            console.error('エラーが発生しました:', error);
+        } catch {
+            console.log("エラーが発生しました")
         }
     };
-
   return (
     <>
       <div className="flex flex-col items-center space-y-6">
         <h1>URANAI</h1>
-
+        <div>こんにちは、{user ? user.accountName: "ゲスト"}</div>
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-10'>
           <div className='col-span-1'>col1</div>
           <img className='col-span-1 w-1/2 sm:w-full' src="/img/uranaiCat.jpg" alt="ようこそ" />

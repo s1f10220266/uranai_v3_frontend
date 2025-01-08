@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 export default function Personality() {
-  const typeAPI = "https://uranai-iniad.onrender.com/api/type";
+  const typeAPI = "https://uranai-backend-v3.onrender.com/api/type";
   const [userType, setUserType] = useState(null);
   const [typeExplain, setTypeExplain] = useState(null);
 
