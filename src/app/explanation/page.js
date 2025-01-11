@@ -2,6 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import TopBar from "../components/TopBar";
+
 const Section = ({ title, children }) => (
     <div className="mb-10">
         <h1 className="text-4xl mb-4">{title}</h1>

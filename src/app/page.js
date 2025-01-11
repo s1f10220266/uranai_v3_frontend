@@ -12,6 +12,7 @@ export default function Home() {
   const [loginName, setLoginName] = useState("");
   const [loginPass, setLoginPass] = useState("");
   const { login } = useAuth();
+  
 
   const [showLoginForm, setShowLoginForm] = useState(false);
   const handleIntroBtnClick = (n) => {

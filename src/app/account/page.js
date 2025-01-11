@@ -41,41 +41,58 @@ export default function Account() {
             setError("エラーが発生しました。もう一度お試しください。");
         }
     };
-    
 
     return (
         <>
             <TopBar />
-            <div>アカウントを作成する</div>
-            <div>アカウントを作成することで、過去のシナリオを振り返れるようになります</div>
+            <div className="min-h-screen flex items-center justify-center pt-12 pb-8">
+                <div className="max-w-2xl w-full bg-white shadow-md rounded-lg p-6">
+                    <h1 className="text-2xl font-bold text-center mb-4">アカウントを作成する</h1>
+                    <p className="text-center mb-6 text-gray-600">
+                        アカウントを作成することで、過去のシナリオを振り返れるようになります
+                    </p>
 
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="name">ニックネーム</label>
-                <input
-                    type="text"
-                    id="name"
-                    placeholder="URANAIで使用するニックネーム"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-                <label htmlFor="password">あいことば</label>
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="ログインのためのパスワード"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <button type="submit">作成</button>
-            </form>
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        <div>
+                            <label htmlFor="name" className="block text-sm font-medium text-gray-700">ニックネーム</label>
+                            <input
+                                type="text"
+                                id="name"
+                                placeholder="URANAIで使用するニックネーム"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="password" className="block text-sm font-medium text-gray-700">あいことば</label>
+                            <input
+                                type="password"
+                                id="password"
+                                placeholder="ログインのためのパスワード"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+                        <div className="text-center">
+                            <button type="submit" className="w-full bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 transition">
+                                作成
+                            </button>
+                        </div>
+                    </form>
 
-            {/* エラーメッセージ */}
-            {error && <div style={{ color: "red" }}>{error}</div>}
+                    {/* エラーメッセージ */}
+                    {error && <div className="mt-4 text-center text-red-600 font-bold">{error}</div>}
 
-            {/* 成功メッセージ */}
-            {success && <div style={{ color: "green" }}>{success}</div>}
+                    {/* 成功メッセージ */}
+                    {success && <div className="mt-4 text-center text-green-600 font-bold">{success}</div>}
 
-            <Link href="/">トップページに戻る</Link>
+                    <div className="mt-6 text-center">
+                        <Link href="/" className="text-blue-500 hover:underline">トップページに戻る</Link>
+                    </div>
+                </div>
+            </div>
         </>
     );
 }
