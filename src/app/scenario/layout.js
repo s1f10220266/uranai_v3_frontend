@@ -1,7 +1,5 @@
 import localFont from "next/font/local";
 import "../globals.css";
-import { AuthProvider } from "../contexts/AuthContext";
-
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -15,18 +13,14 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  title: "URANAI START",
-  description: "URANAI STSRT SOON",
+  title: "URANAI",
+  description: "URANAI Your Scenario",
 };
 
-export default function StartLayout({ children }) {
+export default function ScenarioLayout({ children }) {
   return (
-
-    <AuthProvider >
-    <div>
-      {children}
-    </div>
-    </AuthProvider>
-
+      <div>
+        {children}
+      </div>
   );
 }
