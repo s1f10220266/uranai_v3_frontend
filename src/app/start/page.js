@@ -85,7 +85,7 @@ const { user, isLoggedIn } = useAuth();
     return (
         <>
             <TopBar />
-            <div className="flex flex-col items-center space-y-6 p-4 bg-blue-100">
+            <div className="flex flex-col items-center space-y-6 p-4">
             <div className="">
                 <div className="flex flex-col items-center text-3xl">こんにちは、{user ? user.accountName : "ゲスト"}</div>
             </div>
@@ -107,33 +107,33 @@ const { user, isLoggedIn } = useAuth();
                 </div>
             </div>
         
-            <div className="bg-white shadow-md rounded-md w-full max-w-4xl">
+            <div className={`w-full max-w-4xl ${selectedNumber > 0 ? 'bg-white shadow-md rounded-md' : ''}`}>
                 <div className="p-4">
-                {Object.keys(questions).map((key) =>
+                    {selectedNumber > 0 && Object.keys(questions).map((key) =>
                     questions[key].slice(0, selectedNumber / 4).map((q, i) => (
-                    <fieldset key={`${key}_${i}`} className="mb-4">
-                        <legend className="text-xl mb-2">{q}</legend>
-                        <div className="flex justify-center space-x-4 text-xl pb-3">
-                        <label className="">
+                        <fieldset key={`${key}_${i}`} className="mb-4">
+                        <legend className="text-lg mb-2">{q}</legend>
+                        <div className="flex space-x-4">
+                            <label>
                             <input type="radio" name={`${key}_${i}`} value="2" className="mr-1" />
                             あてはまる
-                        </label>
-                        <label>
+                            </label>
+                            <label>
                             <input type="radio" name={`${key}_${i}`} value="1" className="mr-1" />
                             少しあてはまる
-                        </label>
-                        <label>
+                            </label>
+                            <label>
                             <input type="radio" name={`${key}_${i}`} value="-1" className="mr-1" />
                             あまりあてはまらない
-                        </label>
-                        <label>
+                            </label>
+                            <label>
                             <input type="radio" name={`${key}_${i}`} value="-2" className="mr-1" />
                             あてはまらない
-                        </label>
+                            </label>
                         </div>
-                    </fieldset>
+                        </fieldset>
                     ))
-                )}
+                    )}
                 </div>
             </div>
         

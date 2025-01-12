@@ -7,9 +7,18 @@ module.exports = {
   ],
   theme: {
     extend: {
+      animation: {
+        bounce: 'bounce 1s infinite',
+      },
       colors: {
         background: "var(--background)", // カスタムCSS変数
         foreground: "var(--foreground)", // カスタムCSS変数
+      },
+      keyframes: {
+        bounce: {
+          '0%, 100%': { transform: 'translateY(-10%)' },
+          '50%': { transform: 'translateY(10%)' },
+        },
       },
     },
   },

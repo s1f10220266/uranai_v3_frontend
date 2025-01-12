@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import TopBar from '../components/TopBar';
 
 export default function Personality() {
   const typeAPI = "https://uranai-backend-v3.onrender.com/api/type";
@@ -27,16 +28,20 @@ export default function Personality() {
   }, []);
   return (
     <>
-    <div className="flex flex-col items-center space-y-6">
-      <div>Your Type</div>
+    <TopBar />
+      <div className="flex flex-col items-center justify-start h-screen space-y-6 pt-20">
+        <div className="text-6xl">Your Type</div>
 
-      {userType ? (
-        <div>あなたの性格は <strong>{userType} です!</strong></div>
-      ): (
-        <div>...分析中...</div>
-      )}
+        {userType ? (
+          <div className="text-4xl">あなたの性格は <strong>{userType} です!</strong></div>
+        ) : (
+          <div className="flex items-center space-x-2 text-4xl">
+            <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-blue-500"></div>
+            <div className="animate-bounce text-blue-500">...分析中...</div>
+          </div>
+        )}
 
-      <div className="flex flex-col items-center space-y-6">
+      {/* <div className="flex flex-col items-center space-y-6">
         <Link href="/start" className="group relative inline-flex h-[calc(48px+8px)] items-center justify-center rounded-full bg-neutral-950 py-1 pl-6 pr-14 font-medium text-neutral-50">
           <span className="z-10 pr-2">URANAIを始める！</span>
           <div className="absolute right-1 inline-flex h-12 w-12 items-center justify-end rounded-full bg-neutral-700 transition-[width] group-hover:w-[calc(100%-8px)]">
@@ -59,7 +64,7 @@ export default function Personality() {
             </div>
           </div>
         </Link>
-      </div>
+      </div> */}
     </div>
     </>
   );
