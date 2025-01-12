@@ -8,49 +8,49 @@ import { useRouter } from "next/navigation";
 
 export default function Personality() {
   const router = useRouter();
-  const { typeResult, saveScenarioResult } = useType();
+  const { typeResult, typeExplain, saveScenarioResult } = useType();
 
   const [userType, setUserType] = useState(null);
-  const [typeExplain, setTypeExplain] = useState(null);
+   //const [typeExplain, setTypeExplain] = useState(null);
   const [typeGetSuccess, setTypeGetSuccess] = useState("");
   const [typeGetError, setTypeGetError] = useState("");
   const [userJob, setUserJob] = useState("");
   const [scenarioError, setScenarioError] = useState("");
   const [action, setAction] = useState(false);
-  const getTypeExplain = async () => {
-    setTypeGetError(""); // エラーメッセージをリセット
-    setTypeGetSuccess(""); // 成功メッセージをリセット
+  // const getTypeExplain = async () => {
+  //   setTypeGetError(""); // エラーメッセージをリセット
+  //   setTypeGetSuccess(""); // 成功メッセージをリセット
 
-    try {
-      const response = await fetch("https://uranai-backend-v3.onrender.com/api/judge", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ result: typeResult }),
-      });
+  //   try {
+  //     const response = await fetch("https://uranai-backend-v3.onrender.com/api/judge", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ result: typeResult }),
+  //     });
 
-      console.log("send data!", typeResult);
-      const result = await response.json();
+  //     console.log("send data!", typeResult);
+  //     const result = await response.json();
 
-      if (response.ok) {
-        setUserType(result.userType);
-        setTypeExplain(result.typeExplain);
-      } else {
-        setTypeGetError(result.error || "エラーが発生しました。結果を取得できません。");
-      }
-    } catch (error) {
-      console.error("Catch block triggered:", error);
-      setTypeGetError("エラーが発生しました。結果を取得できません。");
-    }
-  };
+  //     if (response.ok) {
+  //       setUserType(result.userType);
+  //       setTypeExplain(result.typeExplain);
+  //     } else {
+  //       setTypeGetError(result.error || "エラーが発生しました。結果を取得できません。");
+  //     }
+  //   } catch (error) {
+  //     console.error("Catch block triggered:", error);
+  //     setTypeGetError("エラーが発生しました。結果を取得できません。");
+  //   }
+  // };
 
-  useEffect(() => {
-    console.log("typeResult:", typeResult); // デバッグ用
-    if (typeResult) {
-      getTypeExplain();
-    }
-  }, [typeResult]);
+  // useEffect(() => {
+  //   console.log("typeResult:", typeResult); // デバッグ用
+  //   if (typeResult) {
+  //     getTypeExplain();
+  //   }
+  // }, [typeResult]);
 
   const handleSendInfo = async () => {
     setScenarioError("");
@@ -77,6 +77,7 @@ export default function Personality() {
 
       if (result.scenario) {
         saveScenarioResult(result.scenario); // 結果を Context に保存
+        setAction(true);
         router.push("/scenario");
       } else {
         setScenarioError("シナリオ結果が返されませんでした。");
