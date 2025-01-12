@@ -5,16 +5,16 @@ import Link from 'next/link';
 import TopBar from '../components/TopBar';
 import { useAuth } from "../contexts/AuthContext";
 import { useType } from "../contexts/TypeContext";
+import { useRouter } from "next/navigation";
 
 
 export default function Start() {
+const router = useRouter();    
 const typeAPI = "https://uranai-backend-v3.onrender.com/api/type";
 const { user, isLoggedIn } = useAuth();
-const [action, setAction] = useState(false);
 const {saveTypeResult} = useType();
 
   const [selectedNumber, setSelectedNumber] = useState(0);
-  // const navigate = useNavigate();  // useNavigate フックに変更
     // 質問内容
     const questions = {
         e_or_i: [
@@ -87,7 +87,7 @@ const {saveTypeResult} = useType();
           if (result.ready) {
             saveTypeResult(result.result);
             console.log("診断が完了しました");
-            setAction(true);
+            router.push("/personalities");
           } else {
             console.log("診断に失敗しました");
           }
@@ -150,7 +150,7 @@ const {saveTypeResult} = useType();
             </div>
         
             {selectedNumber > 0 && (
-              <Link href="/personalities" className="group relative inline-flex h-[calc(48px+8px)] items-center justify-center rounded-full bg-neutral-950 py-1 pl-6 pr-14 font-medium text-neutral-50">
+              <div href="/personalities" className="group relative inline-flex h-[calc(48px+8px)] items-center justify-center rounded-full bg-neutral-950 py-1 pl-6 pr-14 font-medium text-neutral-50">
                 <button onClick={handleTypeJudge} className="z-10 pr-2"><span className="">性格をチェックする</span></button>
                 <div className="absolute right-1 inline-flex h-12 w-12 items-center justify-end rounded-full bg-neutral-700 transition-[width] group-hover:w-[calc(100%-8px)]">
                     <div className="mr-3.5 flex items-center justify-center">
@@ -171,7 +171,7 @@ const {saveTypeResult} = useType();
                     </svg>
                     </div>
                 </div>
-                </Link>
+                </div>
                 )}
             </div>
         </>
