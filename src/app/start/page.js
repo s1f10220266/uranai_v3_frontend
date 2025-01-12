@@ -4,10 +4,14 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import TopBar from '../components/TopBar';
 import { useAuth } from "../contexts/AuthContext";
+import { useType } from "../contexts/TypeContext";
+
 
 export default function Start() {
 const typeAPI = "https://uranai-backend-v3.onrender.com/api/type";
 const { user, isLoggedIn } = useAuth();
+const [action, setAction] = useState(false);
+const {saveTypeResult} = useType();
 
   const [selectedNumber, setSelectedNumber] = useState(0);
   // const navigate = useNavigate();  // useNavigate フックに変更
@@ -49,47 +53,55 @@ const { user, isLoggedIn } = useAuth();
 
     const handleTypeJudge = async () => {
         const answers = {};
-        
-        Object.keys(questions).forEach(key => {
-            answers[key] = [];
-            questions[key].forEach((_, i) => {
-                const selectedOption = document.querySelector(`input[name="${key}_${i}"]:checked`);
-                if (selectedOption) {
-                    answers[key].push(parseInt(selectedOption.value, 10));
-                } else {
-                    answers[key].push(0); 
-                }
-            });
+      
+        // ラジオボタンの値を収集
+        Object.keys(questions).forEach((key) => {
+          answers[key] = [];
+          questions[key].forEach((_, i) => {
+            const selectedOption = document.querySelector(`input[name="${key}_${i}"]:checked`);
+            answers[key].push(selectedOption ? parseInt(selectedOption.value, 10) : 0);
+          });
         });
-    
+      
         try {
-            const resp = await fetch(typeAPI, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(answers),
-            });
-
-            const result = await resp.json();
-
-            if (result.ready) {
-                console.log("診断が完了しました");
-            } else {
-                console.log("診断に失敗しました");
-            }
-        } catch {
-            console.log("エラーが発生しました")
+          // API呼び出し
+          const resp = await fetch(typeAPI, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(answers),
+          });
+      
+          if (!resp.ok) {
+            throw new Error(`HTTP error! status: ${resp.status}`);
+          }
+      
+          const result = await resp.json();
+          console.log("API Response:", result);
+      
+          // saveTypeResult呼び出し前にデバッグログ
+          console.log("Calling saveTypeResult with:", result.result);
+      
+          // 結果が成功した場合に保存とアクション更新
+          if (result.ready) {
+            saveTypeResult(result.result);
+            console.log("診断が完了しました");
+            setAction(true);
+          } else {
+            console.log("診断に失敗しました");
+          }
+        } catch (error) {
+          console.error("エラーが発生しました:", error.message);
         }
     };
-    return (
-        <>
-            <TopBar />
-            <div className="flex flex-col items-center space-y-6 p-4">
-            <div className="">
-                <div className="flex flex-col items-center text-3xl">こんにちは、{user ? user.accountName : "ゲスト"}</div>
-            </div>
-        
+  return (
+    <>
+    <TopBar />
+      <div className="flex flex-col items-center space-y-6">
+        <div className="text-3xl">こんにちは、{user ? user.accountName: "ゲスト"}</div>
+        <div className='grid grid-cols-1 sm:grid-cols-2 gap-10'>
+        </div>
             <div className="flex space-x-2 mb-4">
                 <div className="">
                     <p className='text-xl -ml-15'>質問数を選んで質問に回答してください！</p>
@@ -113,24 +125,24 @@ const { user, isLoggedIn } = useAuth();
                     questions[key].slice(0, selectedNumber / 4).map((q, i) => (
                         <fieldset key={`${key}_${i}`} className="mb-4">
                         <legend className="text-lg mb-2">{q}</legend>
-                        <div className="flex space-x-4">
+                        <div className="flex justify-center space-x-4">
                             <label>
-                            <input type="radio" name={`${key}_${i}`} value="2" className="mr-1" />
-                            あてはまる
+                                <input type="radio" name={`${key}_${i}`} value="2" className="mr-1" />
+                                あてはまる
                             </label>
                             <label>
-                            <input type="radio" name={`${key}_${i}`} value="1" className="mr-1" />
-                            少しあてはまる
+                                <input type="radio" name={`${key}_${i}`} value="1" className="mr-1" />
+                                少しあてはまる
                             </label>
                             <label>
-                            <input type="radio" name={`${key}_${i}`} value="-1" className="mr-1" />
-                            あまりあてはまらない
+                                <input type="radio" name={`${key}_${i}`} value="-1" className="mr-1" />
+                                あまりあてはまらない
                             </label>
                             <label>
-                            <input type="radio" name={`${key}_${i}`} value="-2" className="mr-1" />
-                            あてはまらない
+                                <input type="radio" name={`${key}_${i}`} value="-2" className="mr-1" />
+                                あてはまらない
                             </label>
-                        </div>
+                            </div>
                         </fieldset>
                     ))
                     )}
