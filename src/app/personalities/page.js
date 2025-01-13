@@ -4,6 +4,7 @@ import TopBar from "../components/TopBar";
 import React, { useState, useEffect } from "react";
 import { useType } from "../contexts/TypeContext";
 import { useRouter } from "next/navigation";
+import Image from 'next/image';
 
 export default function Personality() {
   const router = useRouter();
@@ -115,7 +116,7 @@ export default function Personality() {
         <div>
           {ok ? (
             <div className="flex items-center text-2xl text-green-500 pb-10">
-              <img src="img/catFortuneTelling.gif" style={{ width: '150px', height: 'auto' }} alt="占い猫" />
+              <Image src="img/catFortuneTelling.gif" style={{ width: '150px', height: 'auto' }} alt="占い猫" />
               <span>URANAICatさんが占いを開始しました！少しお待ちください。</span>
             </div>
           ) : (
