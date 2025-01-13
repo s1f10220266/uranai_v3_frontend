@@ -13,7 +13,7 @@ export default function Scenario() {
   return (
     <>
       <TopBar />
-        <div className="flex flex-col items-center justify-start h-screen bg-blue-50 space-y-8 pt-12 px-4">
+        <div className="flex flex-col items-center justify-start h-screen space-y-8 pt-12 px-4">
           <div className="flex flex-col md:flex-row md:space-x-8 items-center justify-center w-full max-w-4xl space-y-6 md:space-y-0">
             <div className="flex flex-col items-center bg-white p-6 rounded-lg shadow-md w-full md:w-1/2">
               <div className="text-3xl font-bold text-gray-700">あなたの性格</div>
@@ -32,7 +32,7 @@ export default function Scenario() {
               <div>{scenarioResult}</div>
             </div>
           </div>
-          <div className="flex flex-row items-center space-x-4">
+          <div className="flex flex-row items-center space-x-4 pb-10">
             <label className="text-2xl mr-10 -ml-20">
               他の職業で占う:
               <input
