@@ -61,7 +61,7 @@ export default function Personality() {
   return (
     <>
       <TopBar />
-      <div className="flex flex-col items-center justify-start h-screen bg-blue-50 space-y-6 pt-20">
+      <div className="flex flex-col items-center justify-start h-screen space-y-6 pt-20">
         <div className="text-6xl font-bold">あなたの性格は</div>
         <div className="text-5xl font-bold text-blue-600">{typeResult}</div>
         <BoxedText>
@@ -75,7 +75,7 @@ export default function Personality() {
           )}
         </BoxedText>
 
-        {scenarioError && <div className="text-red-500">{scenarioError}</div>}
+        {scenarioError && <div className="text-2xl text-red-500">{scenarioError}</div>}
 
         <div className="flex flex-col items-center space-y-4">
           <label className="text-2xl">
@@ -114,9 +114,12 @@ export default function Personality() {
 
         <div>
           {ok ? (
-            <div className="text-2xl text-green-500">URANAICatさんが占いを開始しました！しばしお待ちください。</div>
+            <div className="flex items-center text-2xl text-green-500">
+              <img src="img/catFortuneTelling.gif" style={{ width: '150px', height: 'auto' }} alt="占い猫" />
+              <span>URANAICatさんが占いを開始しました！しばしお待ちください。</span>
+            </div>
           ) : (
-            <div className="text-2xl text-gray-600">ボタンを押して占いを開始しましょう！</div>
+            <div className="text-2xl">ボタンを押して占いを開始しましょう！</div>
           )}
         </div>
       </div>
