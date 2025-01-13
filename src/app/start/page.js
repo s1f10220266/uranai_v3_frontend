@@ -145,17 +145,20 @@ const [withoutQuiz, setWithoutQuiz] = useState("");
                 <div className="">
                     <p className='text-xl -ml-15'>質問数を選んで質問に回答してください！</p>
                     <div className="ml-20">
-                        <button className="bg-white border border-gray-300 rounded-md px-4 py-2 hover:bg-gray-100" onClick={() => handleQuestionEvent(4)}>4問</button>
-                        <button className="bg-white border border-gray-300 rounded-md px-4 py-2 hover:bg-gray-100" onClick={() => handleQuestionEvent(8)}>8問</button>
-                        <button className="bg-white border border-gray-300 rounded-md px-4 py-2 hover:bg-gray-100" onClick={() => handleQuestionEvent(16)}>16問</button>
+                        <button className="bg-white border border-gray-300 rounded-md px-4 py-2 h-12 hover:bg-gray-100" onClick={() => handleQuestionEvent(4)}>4問</button>
+                        <button className="bg-white border border-gray-300 rounded-md px-4 py-2 h-12 hover:bg-gray-100" onClick={() => handleQuestionEvent(8)}>8問</button>
+                        <button className="bg-white border border-gray-300 rounded-md px-4 py-2 h-12 hover:bg-gray-100" onClick={() => handleQuestionEvent(16)}>16問</button>
                     </div>
                 </div>
                 <div className="">
-                    <label className='text-xl'>自分の性格タイプを知っている人は・・・​</label>
+                  <div>
+                    <label className="text-xl ml-12">自分の性格タイプを知っている人は・・・​</label>
+                  </div>
+                  <div className="flex items-center">
                     <select
                       value={withoutQuiz}
                       onChange={(e) => setWithoutQuiz(e.target.value)}
-                      className="border rounded px-2 py-1 mt-2"
+                      className="border rounded px-4 py-2 h-12"
                     >
                       <option value="" disabled>
                         性格タイプを選択してください
@@ -173,7 +176,15 @@ const [withoutQuiz, setWithoutQuiz] = useState("");
                       <option value="ESTP">ESTP (起業家)</option>
                       <option value="ESFP">ESFP (エンターテイナー)</option>
                     </select>
-                    <Link href='/personalities'><button onClick={handleCheckType}>性格をチェックする</button></Link>
+                    <Link href="/personalities">
+                      <button
+                        onClick={handleCheckType}
+                        className="flex items-center justify-center w-48 h-12 bg-blue-300 text-black rounded shadow hover:bg-gray-400"
+                      >
+                        性格をチェックする
+                      </button>
+                    </Link>
+                  </div>
                 </div>
             </div>
         
