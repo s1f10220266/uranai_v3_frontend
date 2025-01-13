@@ -1,52 +1,17 @@
 "use client";
 
 import TopBar from "../components/TopBar";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useType } from "../contexts/TypeContext";
 import { useRouter } from "next/navigation";
 
 export default function Personality() {
   const router = useRouter();
-  const { typeResult, typeExplain, saveScenarioResult } = useType();
+  const { typeResult, typeExplain, saveScenarioResult, saveInputJob } = useType();
 
   const [userJob, setUserJob] = useState("");
   const [scenarioError, setScenarioError] = useState("");
-  const [action, setAction] = useState(false);
-
-  // const getTypeExplain = async () => {
-  //   setTypeGetError(""); // エラーメッセージをリセット
-  //   setTypeGetSuccess(""); // 成功メッセージをリセット
-
-  //   try {
-  //     const response = await fetch("https://uranai-backend-v3.onrender.com/api/judge", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ result: typeResult }),
-  //     });
-
-  //     console.log("send data!", typeResult);
-  //     const result = await response.json();
-
-  //     if (response.ok) {
-  //       setUserType(result.userType);
-  //       setTypeExplain(result.typeExplain);
-  //     } else {
-  //       setTypeGetError(result.error || "エラーが発生しました。結果を取得できません。");
-  //     }
-  //   } catch (error) {
-  //     console.error("Catch block triggered:", error);
-  //     setTypeGetError("エラーが発生しました。結果を取得できません。");
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   console.log("typeResult:", typeResult); // デバッグ用
-  //   if (typeResult) {
-  //     getTypeExplain();
-  //   }
-  // }, [typeResult]);
+  const [ok, setOk] = useState(false);
 
   const BoxedText = ({ children }) => (
     <div className="border border-gray-800 p-4 bg-white text-black shadow-lg rounded-lg">
@@ -62,6 +27,8 @@ export default function Personality() {
       setScenarioError("なりたい職業を入力してください！");
       return;
     }
+    setOk(true);
+    saveInputJob(userJob);
 
     try {
       const response = await fetch("https://uranai-backend-v3.onrender.com/api/scenario", {
@@ -69,7 +36,7 @@ export default function Personality() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ typeResult, userJob }),
+        body: JSON.stringify({ type: typeResult, job: userJob }),
       });
 
       if (!response.ok) {
@@ -81,7 +48,6 @@ export default function Personality() {
 
       if (result.scenario) {
         saveScenarioResult(result.scenario);
-        setAction(true);
         router.push("/scenario");
       } else {
         setScenarioError("シナリオ結果が返されませんでした。");
@@ -121,14 +87,9 @@ export default function Personality() {
               className="border rounded px-2 py-1 mt-2"
             />
           </label>
-          {/* <button
-            onClick={handleSendInfo}
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-          >
-            占い開始！
-          </button> */}
+
           <div className="group relative inline-flex h-[calc(48px+8px)] items-center justify-center rounded-full bg-neutral-950 py-1 pl-6 pr-14 font-medium text-neutral-50">
-              <button onClick={handleSendInfo} className="z-10 pr-2"><span className="">性格をチェックする</span></button>
+              <button onClick={handleSendInfo} className="z-10 pr-2"><span className="">シナリオを生成する</span></button>
                 <div className="absolute right-1 inline-flex h-12 w-12 items-center justify-end rounded-full bg-neutral-700 transition-[width] group-hover:w-[calc(100%-8px)]">
                     <div className="mr-3.5 flex items-center justify-center">
                     <svg
@@ -152,7 +113,7 @@ export default function Personality() {
         </div>
 
         <div>
-          {action ? (
+          {ok ? (
             <div className="text-2xl text-green-500">URANAICatさんが占いを開始しました！しばしお待ちください。</div>
           ) : (
             <div className="text-2xl">ボタンを押して占いを開始しましょう！</div>

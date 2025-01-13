@@ -8,7 +8,7 @@ import TopBar from "../components/TopBar";
 
 
 export default function Scenario() {
-  const { typeResult, scenarioResult } = useType();
+  const { typeResult, scenarioResult, inputJob } = useType();
 
   return (
     <>
@@ -22,7 +22,7 @@ export default function Scenario() {
 
             <div className="flex flex-col items-center bg-white p-6 rounded-lg shadow-md w-full md:w-1/2">
               <div className="text-3xl font-bold text-gray-700">あなたのなりたい職業</div>
-              <div className="text-3xl font-bold text-blue-600 mt-4">あ</div>
+              <div className="text-3xl font-bold text-blue-600 mt-4">{inputJob}</div>
             </div>
           </div>
 
