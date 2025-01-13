@@ -74,10 +74,10 @@ export default function Personality() {
 
       const result = await response.json();
       console.log("Scenario API Response:", result);
+      setAction(true);
 
       if (result.scenario) {
         saveScenarioResult(result.scenario); // 結果を Context に保存
-        setAction(true);
         router.push("/scenario");
       } else {
         setScenarioError("シナリオ結果が返されませんでした。");
