@@ -29,7 +29,7 @@ export default function Scenario() {
           <div className="bg-white p-6 rounded-lg shadow-md max-w-4xl w-full space-y-4">
             <div className="text-xl font-bold text-gray-700">あなたのシナリオ</div>
             <div className="">
-              <div>{scenarioResult}</div>
+              <div className="justfy-center">{scenarioResult}</div>
             </div>
           </div>
           <div className="flex flex-row items-center space-x-4 pb-10">
