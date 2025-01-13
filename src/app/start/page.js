@@ -13,6 +13,7 @@ const router = useRouter();
 const typeAPI = "https://uranai-backend-v3.onrender.com/api/type";
 const { user, isLoggedIn } = useAuth();
 const {saveTypeResult, saveTypeExplain} = useType();
+const [withoutQuiz, setWithoutQuiz] = useState("");
 
   const [selectedNumber, setSelectedNumber] = useState(0);
     // 質問内容
@@ -96,6 +97,43 @@ const {saveTypeResult, saveTypeExplain} = useType();
           console.error("エラーが発生しました:", error.message);
         }
     };
+
+    const handleCheckType = async () => {
+    
+      try {
+        // API呼び出し
+        const resp = await fetch("https://uranai-backend-v3.onrender.com/api/knowntype", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({type: withoutQuiz}),
+        });
+    
+        if (!resp.ok) {
+          throw new Error(`HTTP error! status: ${resp.status}`);
+        }
+    
+        const result = await resp.json();
+        console.log("API Response:", result);
+    
+        // saveTypeResult呼び出し前にデバッグログ
+        console.log("Calling saveTypeResult with:", result.result);
+    
+        // 結果が成功した場合に保存とアクション更新
+        if (result.ready) {
+          saveTypeResult(result.result);
+          saveTypeExplain(result.typeExplain);
+          console.log("診断が完了しました");
+          //router.push("/personalities");
+        } else {
+          console.log("診断に失敗しました");
+        }
+      } catch (error) {
+        console.error("エラーが発生しました:", error.message);
+      }
+  };
+
   return (
     <>
     <TopBar />
@@ -113,10 +151,29 @@ const {saveTypeResult, saveTypeExplain} = useType();
                     </div>
                 </div>
                 <div className="">
-                    <div className=""></div>
-                    <p className='text-xl'>自分の性格タイプを知っている人は・・・​</p>
-                    <button className="">性格タイプ入力</button>
-                    <button className="">職業入力へ</button>
+                    <label className='text-xl'>自分の性格タイプを知っている人は・・・​</label>
+                    <select
+                      value={withoutQuiz}
+                      onChange={(e) => setWithoutQuiz(e.target.value)}
+                      className="border rounded px-2 py-1 mt-2"
+                    >
+                      <option value="" disabled>
+                        性格タイプを選択してください
+                      </option>
+                      <option value="INFJ">INFJ (提唱者)</option>
+                      <option value="INFJ">INFJ (仲介者)</option>
+                      <option value="ENFJ">ENFJ (主人公)</option>
+                      <option value="ENFJ">ENFJ (運動家)</option>
+                      <option value="ENFJ">ENFJ (管理者)</option>
+                      <option value="ISFJ">ISFJ (擁護者)</option>
+                      <option value="ESTJ">ESTJ (幹部)</option>
+                      <option value="ESTJ">ESTJ (領事)</option>
+                      <option value="ISTP">ISTP (巨匠)</option>
+                      <option value="ISFP">ISFP (冒険家)</option>
+                      <option value="ESTP">ESTP (起業家)</option>
+                      <option value="ESFP">ESFP (エンターテイナー)</option>
+                    </select>
+                    <Link href='/personalities'><button onClick={handleCheckType}>性格をチェックする</button></Link>
                 </div>
             </div>
         
