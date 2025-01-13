@@ -56,12 +56,17 @@ export default function TopBar({ onLoginClick }) {
             </li>
           </ul>
           <div className="mt-6 flex flex-col items-center">
-            <button onClick={() => {
+            <Link href="/login">
+              <button className="flex items-center justify-center w-48 py-2 bg-blue-300 text-black rounded shadow hover:bg-gray-400 mb-4">
+                <span className="mr-2">👤</span>ログイン
+              </button>
+            </Link>
+            {/* <button onClick={() => {
                 toggleSidebar();
                 onLoginClick();
               }} className="flex items-center justify-center w-48 py-2 bg-blue-300 text-black rounded shadow hover:bg-gray-400 mb-4">
               <span className="mr-2">👤</span>ログイン
-            </button>
+            </button> */}
             {/* <button className="flex items-center justify-center w-48 py-2 bg-gray-300 text-black rounded shadow hover:bg-gray-400 mb-4">
               <span className="mr-2">👤</span> <Link href="/login" className="text-blue-500 underline hover:text-blue-700">ログイン</Link>
             </button> */}

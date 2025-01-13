@@ -3,79 +3,101 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import TopBar from "../components/TopBar";
+import { useAuth } from "../contexts/AuthContext";
 
-export default function Account() {
-    const [name, setName] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
+export default function Login() {
+  const [action, setAction] = useState(null);
+  const [loginSuccess, setLoginSuccess] = useState(false);
+  const [loginError, setLoginError] = useState("");
+  const [loginName, setLoginName] = useState("");
+  const [loginPass, setLoginPass] = useState("");
+  const { login } = useAuth();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault(); // ページ遷移を防ぐ
-        setError(""); // エラーメッセージをリセット
-        setSuccess(""); // 成功メッセージをリセット
-    
-        // フロントエンドで入力データをバリデーション
-        if (!name || !password) {
-            setError("ニックネームとパスワードを入力してください。");
-            return;
-        }
-    
-        try {
-            const response = await fetch("https://uranai-backend-v3.onrender.com/api/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ name, password }), // JSON形式で送信
-            });
-    
-            const result = await response.json();
-    
-            if (result.nameExist) {
-                setSuccess("アカウントが正常に作成されました！");
-            } else {
-                setError("そのニックネームはすでに使われています。別のニックネームを試してください。");
-            }
-        } catch (error) {
-            setError("エラーが発生しました。もう一度お試しください。");
-        }
-    };
+  const handleIntroBtnClick = (n) => {
+    setAction(n);
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault(); // ページ遷移を防ぐ
+    setLoginError(""); // エラーメッセージをリセット
+    setLoginSuccess(""); // 成功メッセージをリセット
+
+    // フロントエンドで入力データをバリデーション
+    if (!loginName || !loginPass) {
+        setLoginError("ニックネームとパスワードを入力してください。");
+        return;
+    }
+    // console.log("Sending data:", { name: loginName, password: loginPass });
+    try {
+      const response = await fetch("https://uranai-backend-v3.onrender.com/api/login", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name: loginName, password: loginPass }),
+      });
+  
+      console.log("Raw response:", response);
+  
+      const result = await response.json(); // ここで例外が発生する可能性あり
+      console.log("Parsed response JSON:", result);
+  
+      if (response.ok && result.loginSuccess) {
+          login({accountName: loginName});
+          setLoginSuccess("ログインしました！");
+      } else {
+          setLoginError(result.error + "ログインに失敗しました。ニックネームとあいことばを確認してください。");
+      }
+  } catch (error) {
+      console.error("Catch block triggered:", error);
+      setLoginError("エラーが発生しました。ログインできません。");
+  }
+};
     
 
     return (
         <>
-            <TopBar />
-            <div>アカウントを作成する</div>
-            <div>アカウントを作成することで、過去のシナリオを振り返れるようになります</div>
+        <TopBar />
+            <div className="min-h-screen flex items-center justify-center pt-12 pb-8">
+                <div className="max-w-2xl w-full bg-white shadow-md rounded-lg p-6">
+                <h1 className="text-2xl font-bold text-center mb-10">ログインフォーム</h1>
+                    <form onSubmit={handleLogin} className="flex flex-col items-center space-y-4">
+                    <label htmlFor="name" className="text-lg">ニックネーム</label>
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="UranaiCatちゃん"
+                        value={loginName}
+                        onChange={(e) => setLoginName(e.target.value)}
+                        className="border border-gray-300 p-2 rounded w-64"
+                    />
+                    <label htmlFor="password" className="text-lg">
+                        あいことば
+                    </label>
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="あいことばを入力"
+                        value={loginPass}
+                        onChange={(e) => setLoginPass(e.target.value)}
+                        className="border border-gray-300 p-2 rounded w-64"
+                    />
+                    <Link href="/start">
+                        <div className="text-center">
+                            <button type="submit" className="w-full bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 transition">
+                                ログイン
+                            </button>
+                        </div>
+                    </Link>
 
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="name">ニックネーム</label>
-                <input
-                    type="text"
-                    id="name"
-                    placeholder="URANAIで使用するニックネーム"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-                <label htmlFor="password">あいことば</label>
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="ログインのためのパスワード"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <button type="submit">作成</button>
-            </form>
-
-            {/* エラーメッセージ */}
-            {error && <div style={{ color: "red" }}>{error}</div>}
-
-            {/* 成功メッセージ */}
-            {success && <div style={{ color: "green" }}>{success}</div>}
-
-            <Link href="/">トップページに戻る</Link>
+                    {loginError && <div className="text-red-500">{loginError}</div>}
+                    {loginSuccess && <div className="text-green-500">{loginSuccess}</div>}
+                    </form>
+                    <div className="mt-6 text-center">
+                        <Link href="/" className="text-blue-500 hover:underline">トップページに戻る</Link>
+                    </div>
+                </div>
+            </div>
         </>
     );
 }
