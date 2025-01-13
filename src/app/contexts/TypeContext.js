@@ -27,10 +27,17 @@ export const TypeProvider = ({ children }) => {
     setInputJob(input);
   }
 
+  const resetTypeContext = () => {
+    setTypeResult(null);
+    setTypeExplain(null);
+    setScenarioResult(null);
+    setInputJob(null);
+  }
+
 
 
   return (
-    <TypeContext.Provider value={{ typeResult, saveTypeResult, scenarioResult, saveScenarioResult, typeExplain, saveTypeExplain, inputJob, saveInputJob }}>
+    <TypeContext.Provider value={{ typeResult, saveTypeResult, scenarioResult, saveScenarioResult, typeExplain, saveTypeExplain, inputJob, saveInputJob, resetTypeContext }}>
       {children}
     </TypeContext.Provider>
   );

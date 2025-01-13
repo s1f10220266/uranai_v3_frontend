@@ -5,10 +5,61 @@ import Link from 'next/link';
 import { useAuth } from "../contexts/AuthContext";
 import { useType } from "../contexts/TypeContext";
 import TopBar from "../components/TopBar";
+import { useRouter } from "next/navigation";
+
 
 
 export default function Scenario() {
-  const { typeResult, scenarioResult, inputJob } = useType();
+  const { typeResult, scenarioResult, inputJob, resetTypeContext, saveInputJob, saveScenarioResult } = useType();
+  const router = useRouter();
+  const [anotherJob, setAnotherJob] = useState("");
+  const [createAgainErr, setCreateAgainErr] = useState("");
+  const [okAgain, setOkAgain] = useState(false);
+  const [anotherScenarioError, setAnotherScenarioError] = useState("");
+  
+  const handleResetAll = () => {
+    resetTypeContext();
+    router.push('/');
+  }
+
+  const handleScenarioAgain = async () => {
+    setCreateAgainErr("");
+    setAnotherScenarioError("");
+
+    if (!anotherJob) {
+      setCreateAgainErr("なりたい職業を入力してください！");
+      return;
+    }
+    setOkAgain(true);
+    saveInputJob(anotherJob); // 新しいなりたい職業を保存
+
+
+    try {
+      const response = await fetch("https://uranai-backend-v3.onrender.com/api/scenario", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ type: typeResult, job: anotherJob }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log("Scenario API Response:", result);
+
+      if (result.scenario) {
+        saveScenarioResult(result.scenario);
+      } else {
+        setAnotherScenarioError("シナリオ結果が返されませんでした。");
+      }
+    } catch (error) {
+      console.error("エラーが発生しました:", error.message);
+      setAnotherScenarioError("データの送信に失敗しました。もう一度お試しください。");
+    }
+  }
 
   return (
     <>
@@ -37,12 +88,13 @@ export default function Scenario() {
               他の職業で占う:
               <input
                 type="text"
-                onChange={(e) => setUserJob(e.target.value)}
+                value={anotherJob}
+                onChange={(e) => setAnotherJob(e.target.value)}
                 className="border rounded px-2 py-1 mt-2"
               />
             </label>
-            <Link href="/" className="group relative inline-flex h-[calc(48px+8px)] items-center justify-center rounded-full bg-neutral-950 py-1 pl-6 pr-14 font-medium text-neutral-50">
-              <button className="z-10 pr-2"><span>おしまい</span></button>
+            <div className="group relative inline-flex h-[calc(48px+8px)] items-center justify-center rounded-full bg-neutral-950 py-1 pl-6 pr-14 font-medium text-neutral-50">
+              <button onClick={() => handleResetAll} className="z-10 pr-2"><span>おしまい</span></button>
               <div className="absolute right-1 inline-flex h-12 w-12 items-center justify-end rounded-full bg-neutral-700 transition-[width] group-hover:w-[calc(100%-8px)]">
                 <div className="mr-3.5 flex items-center justify-center">
                   <svg
@@ -62,8 +114,10 @@ export default function Scenario() {
                   </svg>
                 </div>
               </div>
-            </Link>
+            </div>
           </div>
+          <button onClick={handleScenarioAgain}>シナリオ再生成</button>
+          {okAgain ? (<div>占いを開始しました！</div>): (<div>{createAgainErr}</div>)}
       </div>
     </>
   );
