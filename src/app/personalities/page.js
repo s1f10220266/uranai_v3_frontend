@@ -114,7 +114,10 @@ export default function Personality() {
 
         <div>
           {ok ? (
-            <div className="text-2xl text-green-500">URANAICatさんが占いを開始しました！しばしお待ちください。</div>
+            <div className="flex items-center text-2xl text-green-500">
+              <img src="img/catFortuneTelling.gif" style={{ width: '150px', height: 'auto' }} alt="占い猫" />
+              <span>URANAICatさんが占いを開始しました！しばしお待ちください。</span>
+            </div>
           ) : (
             <div className="text-2xl">ボタンを押して占いを開始しましょう！</div>
           )}
