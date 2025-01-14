@@ -58,7 +58,41 @@ export default function Login() {
     return (
         <>
         <TopBar />
-            <div className="min-h-screen flex items-center justify-center pt-12 pb-8">
+        <div className="min-h-screen flex items-center justify-center pt-12 pb-8">
+                <div className="max-w-2xl w-full bg-white shadow-md rounded-lg p-6">
+                    <h1 className="text-2xl font-bold text-center mb-4">ログインフォーム</h1>
+                    <form onSubmit={handleLogin} className="space-y-4">
+                        <div>
+                            <label htmlFor="name" className="block text-sm font-medium text-gray-700">ニックネーム</label>
+                            <input
+                                type="text"
+                                id="name"
+                                placeholder="UranaiCatちゃん"
+                                value={loginName}
+                                onChange={(e) => setName(e.target.value)}
+                                className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="password" className="block text-sm font-medium text-gray-700">あいことば</label>
+                            <input
+                                type="password"
+                                id="password"
+                                placeholder="あいことばを入力"
+                                value={loginPass}
+                                onChange={(e) => setLoginPass(e.target.value)}
+                                className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+                        <Link href="/start">
+                            <div className="text-center mt-5">
+                                <button type="submit" className="w-full bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 transition">
+                                    ログイン
+                                </button>
+                        </div>
+                        </Link>
+                    </form>
+            {/*<div className="min-h-screen flex items-center justify-center pt-12 pb-8">
                 <div className="max-w-2xl w-full bg-white shadow-md rounded-lg p-6">
                 <h1 className="text-2xl font-bold text-center mb-10">ログインフォーム</h1>
                     <form onSubmit={handleLogin} className="flex flex-col items-center space-y-4">
@@ -92,7 +126,7 @@ export default function Login() {
 
                     {loginError && <div className="text-red-500">{loginError}</div>}
                     {loginSuccess && <div className="text-green-500">{loginSuccess}</div>}
-                    </form>
+                    </form> */}
                     <div className="mt-6 text-center">
                         <Link href="/" className="text-blue-500 hover:underline">トップページに戻る</Link>
                     </div>
