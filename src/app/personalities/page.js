@@ -3,13 +3,14 @@
 import TopBar from "../components/TopBar";
 import React, { useState, useEffect } from "react";
 import { useType } from "../contexts/TypeContext";
+import { useAuth } from "../contexts/AuthContext";
 import { useRouter } from "next/navigation";
 import Image from 'next/image';
 
 export default function Personality() {
   const router = useRouter();
   const { typeResult, typeExplain, saveScenarioResult, saveInputJob } = useType();
-
+  const { uranaiUser, isLoggedIn, setUranaiUser } = useAuth();
   const [userJob, setUserJob] = useState("");
   const [scenarioError, setScenarioError] = useState("");
   const [ok, setOk] = useState(false);
@@ -30,6 +31,11 @@ export default function Personality() {
     }
     setOk(true);
     saveInputJob(userJob);
+    console.log("name", uranaiUser);
+    console.log("type", typeResult);
+    console.log("job", userJob);
+
+    if (!isLoggedIn) setUranaiUser("");
 
     try {
       const response = await fetch("https://uranai-backend-v3.onrender.com/api/scenario", {
@@ -37,7 +43,7 @@ export default function Personality() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ type: typeResult, job: userJob }),
+        body: JSON.stringify({ type: typeResult, job: userJob, name: uranaiUser }),
       });
 
       if (!response.ok) {

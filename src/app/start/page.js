@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 export default function Start() {
 const router = useRouter();    
 const typeAPI = "https://uranai-backend-v3.onrender.com/api/type";
-const { user, isLoggedIn } = useAuth();
+const { uranaiUser, isLoggedIn } = useAuth();
 const {saveTypeResult, saveTypeExplain} = useType();
 const [withoutQuiz, setWithoutQuiz] = useState("");
 
@@ -138,7 +138,7 @@ const [withoutQuiz, setWithoutQuiz] = useState("");
     <>
     <TopBar />
       <div className="flex flex-col items-center space-y-6">
-        <div className="text-3xl">こんにちは、{user ? user.accountName: "ゲスト"}</div>
+        <div className="text-3xl">こんにちは、{uranaiUser ? uranaiUser: "ゲスト"}</div>
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-10'>
         </div>
             <div className="flex space-x-2 mb-4">
@@ -163,14 +163,18 @@ const [withoutQuiz, setWithoutQuiz] = useState("");
                       <option value="" disabled>
                         性格タイプを選択してください
                       </option>
+                      <option value="INTJ">INTJ (建築家)</option>
+                      <option value="INTP">INTP (論理学者)</option>
+                      <option value="ENTJ">ENTJ (指揮官)</option>
+                      <option value="ENTP">ENTP (討論者)</option>
                       <option value="INFJ">INFJ (提唱者)</option>
-                      <option value="INFJ">INFJ (仲介者)</option>
+                      <option value="INFP">INFP (仲介者)</option>
                       <option value="ENFJ">ENFJ (主人公)</option>
-                      <option value="ENFJ">ENFJ (運動家)</option>
-                      <option value="ENFJ">ENFJ (管理者)</option>
+                      <option value="ENFP">ENFP (運動家)</option>
+                      <option value="ISTJ">ISTJ (管理者)</option>
                       <option value="ISFJ">ISFJ (擁護者)</option>
                       <option value="ESTJ">ESTJ (幹部)</option>
-                      <option value="ESTJ">ESTJ (領事)</option>
+                      <option value="ESFJ">ESFJ (領事)</option>
                       <option value="ISTP">ISTP (巨匠)</option>
                       <option value="ISFP">ISFP (冒険家)</option>
                       <option value="ESTP">ESTP (起業家)</option>

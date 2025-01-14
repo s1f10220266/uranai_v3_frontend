@@ -132,29 +132,10 @@ export default function Home() {
             </form>
             )}
           </div>
-          {/* <form onSubmit={handleLogin} className="flex flex-col items-center space-y-4">
-            <label htmlFor="name" className="text-lg">ニックネーム</label>
-            <input type="text" id="name" placeholder="UranaiCatちゃん" value={loginName} onChange={(e) => setLoginName(e.target.value)} className="border border-gray-300 p-2 rounded w-64"
-            />
-            <label htmlFor="password" className="text-lg">あいことば</label>
-            <input type="password" id="password" placeholder="" value={loginPass}  onChange={(e) => setLoginPass(e.target.value)} className="border border-gray-300 p-2 rounded w-64"
-            />
-            <button type="submit" className="bg-blue-500 text-white py-2 px-6 rounded hover:bg-blue-600">
-              ログインする
-            </button>
-          */}
-            {/* エラーメッセージ */}
-            {/* {loginError && <div className="text-red-500">{loginError}</div>} */}
 
-            {/* 成功メッセージ */}
-            {/* {loginSuccess && <div className="text-green-500">{loginSuccess}</div>} */}
-          {/* </form> */}
+          <Link href="/account">アカウント</Link>
 
-          {/* <div className="mt-4">
-            <Link href="/account" className="text-blue-500 underline hover:text-blue-700">
-              アカウントを作成する
-            </Link>
-          </div> */}
+  
           {!showLoginForm && (
             <Link href="/start" className="group relative inline-flex h-[calc(48px+8px)] items-center justify-center rounded-full bg-neutral-950 py-1 pl-6 pr-14 font-medium text-neutral-50 my-4">
               <span className="z-10 pr-2">URANAIを始める！</span>
