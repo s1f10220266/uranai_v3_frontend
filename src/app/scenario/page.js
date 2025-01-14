@@ -53,8 +53,10 @@ export default function Scenario() {
 
       if (result.scenario) {
         saveScenarioResult(result.scenario);
+        setOkAgain(false); //結果が帰ってきたら再生成しているuranai_catを消す作業
       } else {
         setAnotherScenarioError("シナリオ結果が返されませんでした。");
+        setOkAgain(false); //結果が帰ってきたら再生成しているuranai_catを消す作業
       }
     } catch (error) {
       console.error("エラーが発生しました:", error.message);
