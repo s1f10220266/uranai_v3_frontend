@@ -133,7 +133,7 @@ export default function Home() {
             )}
           </div>
 
-          <Link href="/account">アカウント</Link>
+          {/* <Link href="/account">アカウント</Link> */}
 
   
           {!showLoginForm && (

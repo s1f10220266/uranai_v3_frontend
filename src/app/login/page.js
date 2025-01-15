@@ -87,8 +87,8 @@ export default function Login() {
                         </div>
                     </form>
                     <div className="mt-6 text-center">
-                        {loginSuccess ? (<div>{loginSuccess}</div>): (<></>)}
-                        {loginError ? (<div>{loginError}</div>): (<></>)}
+                        {loginSuccess ? (<div className="mb-5" style={{ color: "green" }}>{loginSuccess}</div>): (<></>)}
+                        {loginError ? (<div className="mb-5" style={{ color: "red" }}>{loginError}</div>): (<></>)}
                         <Link href="/" className="text-blue-500 hover:underline">トップページに戻る</Link>
                     </div>
                 </div>

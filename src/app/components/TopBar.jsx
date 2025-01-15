@@ -56,6 +56,14 @@ export default function TopBar({ onLoginClick }) {
               <span className="absolute -top-2 left-0 right-0 bg-transparent"></span>
               <Link href="../explanation/#No.5" className="block hover:bg-gray-400 rounded-lg p-2">開発者について</Link>
             </li>
+            <div>
+              { isLoggedIn && 
+              <li className="relative border-b border-gray-300 rounded-lg group">
+                <span className="absolute -top-2 left-0 right-0 bg-transparent"></span>
+                <Link href="../account" className="block hover:bg-gray-400 rounded-lg p-2">シナリオのログ</Link>
+              </li>
+              }
+            </div>
           </ul>
           <div className="mt-6 flex flex-col items-center">
             { isLoggedIn ? (
@@ -72,7 +80,7 @@ export default function TopBar({ onLoginClick }) {
               </button>
             </Link>
             <button className="flex items-center justify-center w-48 py-2 bg-blue-300 text-black rounded shadow hover:bg-blue-400">
-              <span className="mr-2">👤</span><Link href="/account">サインイン</Link>
+              <span className="mr-2">👤</span><Link href="/signin">サインイン</Link>
             </button>
               </>
             )}
