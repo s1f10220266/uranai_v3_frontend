@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
     }, []); // 初回レンダリング時に実行
 
     return (
-        <AuthContext.Provider value={{ uranaiUser, isLoggedIn, login, logout, setIsLoggedIn }}>
+        <AuthContext.Provider value={{ uranaiUser, isLoggedIn, login, logout, setIsLoggedIn, setUranaiUser }}>
             {children}
         </AuthContext.Provider>
     );

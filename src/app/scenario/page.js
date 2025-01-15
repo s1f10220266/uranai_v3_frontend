@@ -86,7 +86,12 @@ export default function Scenario() {
             <div className="flex-1 space-y-4 text-center">
     <div className="text-xl font-bold text-gray-700">あなたのシナリオ</div>
     <div className="justify-center flex items-center">
-      <div className="text-lg text-gray-800">{scenarioResult}</div>
+      <div className="text-lg text-gray-800">{scenarioResult.split("\n").map((line, index) => (
+          <React.Fragment key={index}>
+            {line}
+            <br />
+          </React.Fragment>
+        ))}</div>
     </div>
   </div>
             {/* 右側の画像 */}
