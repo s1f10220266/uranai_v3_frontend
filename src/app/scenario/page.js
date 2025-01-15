@@ -82,14 +82,14 @@ export default function Scenario() {
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-lg shadow-md max-w-4xl w-full flex items-center space-x-4">
+          <div className="bg-white p-6 rounded-lg shadow-md flex-col max-w-4xl w-full flex items-center space-x-4">
             {/* 左側の内容 */}
-            <div className="flex-1 space-y-4">
-              <div className="text-xl font-bold text-gray-700">あなたのシナリオ</div>
-              <div className="">
-                <div className="justify-center">{scenarioResult}</div>
-              </div>
-            </div>
+            <div className="flex-1 space-y-4 text-center">
+    <div className="text-xl font-bold text-gray-700">あなたのシナリオ</div>
+    <div className="justify-center flex items-center">
+      <div className="text-lg text-gray-800">{scenarioResult}</div>
+    </div>
+  </div>
             {/* 右側の画像 */}
             {/* <div className="flex-shrink-0">
               <img src="img/uranaiCat.jpg" className="w-40 h-40 object-cover rounded-lg"/>
