@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useAuth } from "../contexts/AuthContext";
 
 export default function TopBar({ onLoginClick }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  const { isLoggedIn, logout } = useAuth();
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -56,26 +58,24 @@ export default function TopBar({ onLoginClick }) {
             </li>
           </ul>
           <div className="mt-6 flex flex-col items-center">
-            <Link href="/login">
+            { isLoggedIn ? (
+              <>
+              <button onClick={logout} className="flex items-center justify-center w-48 py-2 bg-blue-300 text-black rounded shadow hover:bg-gray-400 mb-4">
+                <span className="mr-2">👤</span>ログアウト
+              </button>
+            </>
+              ): (
+              <>
+              <Link href="/login">
               <button className="flex items-center justify-center w-48 py-2 bg-blue-300 text-black rounded shadow hover:bg-gray-400 mb-4">
                 <span className="mr-2">👤</span>ログイン
               </button>
             </Link>
-            {/* <button onClick={() => {
-                toggleSidebar();
-                onLoginClick();
-              }} className="flex items-center justify-center w-48 py-2 bg-blue-300 text-black rounded shadow hover:bg-gray-400 mb-4">
-              <span className="mr-2">👤</span>ログイン
-            </button> */}
-            {/* <button className="flex items-center justify-center w-48 py-2 bg-gray-300 text-black rounded shadow hover:bg-gray-400 mb-4">
-              <span className="mr-2">👤</span> <Link href="/login" className="text-blue-500 underline hover:text-blue-700">ログイン</Link>
-            </button> */}
             <button className="flex items-center justify-center w-48 py-2 bg-blue-300 text-black rounded shadow hover:bg-blue-400">
               <span className="mr-2">👤</span><Link href="/account">サインイン</Link>
             </button>
-            {/* <button className="flex items-center justify-center w-48 py-2 bg-blue-300 text-black rounded shadow hover:bg-blue-400">
-              <span className="mr-2">👤</span> <Link href="/account" className="text-blue-500 underline hover:text-blue-700">サインイン</Link>
-            </button> */}
+              </>
+            )}
           </div>
         </div>
       )}
