@@ -138,7 +138,7 @@ export default function Scenario() {
             <div>
               {okAgain ? (
                 <div className="flex items-center text-2xl text-green-500 pb-10">
-                    <Image src="/img/catFortuneTelling.gif" style={{ width: '150px', height: 'auto' }} alt="占い猫" />
+                    <Image src="/img/catFortuneTelling.gif" width={150} height={150} alt="占い猫" />
                     <span>URANAICatさんが占いを再生成しています。</span>
                 </div>
               ) : (
