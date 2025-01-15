@@ -60,7 +60,7 @@ export default function TopBar({ onLoginClick }) {
               { isLoggedIn && 
               <li className="relative border-b border-gray-300 rounded-lg group">
                 <span className="absolute -top-2 left-0 right-0 bg-transparent"></span>
-                <Link href="../account" className="block hover:bg-gray-400 rounded-lg p-2">シナリオのログ</Link>
+                <Link href="/account" className="block hover:bg-gray-400 rounded-lg p-2">シナリオのログ</Link>
               </li>
               }
             </div>

@@ -22,8 +22,8 @@ export default function Account() {
     return (
         <div>
             <TopBar />
-            <div className="flex flex-col min-h-screen mt-10 ml-10 mr-10">
-                <Section title="URANAIとは">
+            <div className="flex flex-col min-h-screen mt-10 ml-10 mr-10" id="No.1">
+                <Section title="URANAIとは" id="No.1">
                     <BoxedText>
                         <p>URANAIとはChatGPT-4を活用した就活を支援するWebアプリです。</p>
                         <p>社会問題の調査を行った結果、「早期離職」が社会問題となっていることがわかりました。</p>
@@ -32,7 +32,7 @@ export default function Account() {
                         <p>URANAIの名前の由来は、生成AIの「AI」と、「将来を占うようなアプリ」をもじって考案しました。</p>
                     </BoxedText>
                 </Section>
-                <Section title="URANAIの使い方">
+                <Section title="URANAIの使い方" id="No.2">
                     <BoxedText>
                         <ul className="list-decimal pl-5">
                             <li>質問数を選択し、質問に回答</li>
@@ -45,7 +45,7 @@ export default function Account() {
                         <p>※アタリ・ハズレはあるので参考程度にお読みください</p>
                     </BoxedText>
                 </Section>
-                <Section title="性格診断方法">
+                <Section title="性格診断方法" id="No.3">
                 <BoxedText>
                         <p>URANAIは「16 Personalities性格診断」を参考に診断を行っています。</p>
                         <p>「16 Personalities性格診断」とは、物事に対する考え方や価値観の傾向から個人の思考を分析し、その人の深層的な強みと弱みに加え、思考の傾向について明らかにする性格診断テストのことを言います。​</p>
@@ -57,7 +57,7 @@ export default function Account() {
                         </a>
                     </BoxedText>
                 </Section>
-                <Section title="性格タイプの種類">
+                <Section title="性格タイプの種類" id="No.4">
                     <BoxedText>
                         <p>「16 Personalities性格診断」における診断結果は必ずアルファベット4文字で表現されますが、これは以下の4つの指標×2つのタイプのどちらかの組み合わせを表しています。</p>
                         <div className="flex justify-center items-center">
@@ -65,7 +65,7 @@ export default function Account() {
                         </div>
                     </BoxedText>
                 </Section>
-                <Section title="開発者について">
+                <Section title="開発者について" id="No.5">
                     <BoxedText>
                         <p>アプリや、チームの紹介をまとめています。</p>
                         <p>
