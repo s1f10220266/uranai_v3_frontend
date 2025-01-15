@@ -9,7 +9,6 @@ import TopBar from "../components/TopBar";
 import { useRouter } from "next/navigation";
 
 
-
 export default function Scenario() {
   const { typeResult, scenarioResult, inputJob, resetTypeContext, saveInputJob, saveScenarioResult } = useType();
   const { uranaiUser, isLoggedIn, setUranaiUser } = useAuth();

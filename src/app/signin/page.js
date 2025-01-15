@@ -89,7 +89,7 @@ export default function Account() {
                     {success && <div className="text-center mt-5" style={{ color: "green" }}>{success}</div>}
 
                     <div className="mt-6 text-center">
-                        <Link href="/" className="text-blue-500 hover:underline">トップページに戻る</Link>
+                        <Link href="../login" className="text-blue-500 hover:underline">ログインページへ</Link>
                     </div>
                 </div>
             </div>
