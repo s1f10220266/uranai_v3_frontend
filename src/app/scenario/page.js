@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image';
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from "../contexts/AuthContext";
@@ -80,11 +81,18 @@ export default function Scenario() {
             </div>
           </div>
 
-          <div className="bg-white p-6 rounded-lg shadow-md max-w-4xl w-full space-y-4">
-            <div className="text-xl font-bold text-gray-700">あなたのシナリオ</div>
-            <div className="">
-              <div className="justfy-center">{scenarioResult}</div>
+          <div className="bg-white p-6 rounded-lg shadow-md max-w-4xl w-full flex items-center space-x-4">
+            {/* 左側の内容 */}
+            <div className="flex-1 space-y-4">
+              <div className="text-xl font-bold text-gray-700">あなたのシナリオ</div>
+              <div className="">
+                <div className="justify-center">{scenarioResult}</div>
+              </div>
             </div>
+            {/* 右側の画像 */}
+            {/* <div className="flex-shrink-0">
+              <img src="img/uranaiCat.jpg" className="w-40 h-40 object-cover rounded-lg"/>
+            </div> */}
           </div>
           <div className="flex flex-col items-start space-y-4 pb-10">
             <div className="flex flex-row items-center">
@@ -132,7 +140,7 @@ export default function Scenario() {
             <div>
               {okAgain ? (
                 <div className="flex items-center text-2xl text-green-500 pb-10">
-                    <img src="img/catFortuneTelling.gif" style={{ width: '150px', height: 'auto' }} alt="占い猫" />
+                    <Image src="/img/catFortuneTelling.gif" style={{ width: '150px', height: 'auto' }} alt="占い猫" />
                     <span>URANAICatさんが占いを再生成しています。</span>
                 </div>
               ) : (
@@ -142,7 +150,7 @@ export default function Scenario() {
             {/* <div>
               {ok ? (
                 <div className="flex items-center text-2xl text-green-500 pb-10">
-                  <img src="img/catFortuneTelling.gif" style={{ width: '150px', height: 'auto' }} alt="占い猫" />
+                  <Image src="/img/catFortuneTelling.gif" style={{ width: '150px', height: 'auto' }} alt="占い猫" />
                   <span>URANAICatさんが占いを開始しました！少しお待ちください。</span>
                 </div>
               ) : (
