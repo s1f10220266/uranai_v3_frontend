@@ -6,16 +6,11 @@ import TopBar from "../components/TopBar";
 import { useAuth } from "../contexts/AuthContext";
 
 export default function Login() {
-  const [action, setAction] = useState(null);
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [loginError, setLoginError] = useState("");
   const [loginName, setLoginName] = useState("");
   const [loginPass, setLoginPass] = useState("");
-  const { login } = useAuth();
-
-  const handleIntroBtnClick = (n) => {
-    setAction(n);
-  };
+  const { login, isLoggedIn, logout, setIsLoggedIn } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault(); // ページ遷移を防ぐ
@@ -43,10 +38,12 @@ export default function Login() {
       console.log("Parsed response JSON:", result);
   
       if (response.ok && result.loginSuccess) {
-          login({accountName: loginName});
+          login(loginName);
+          setIsLoggedIn(true);
           setLoginSuccess("ログインしました！");
       } else {
-          setLoginError(result.error + "ログインに失敗しました。ニックネームとあいことばを確認してください。");
+            logout();
+          setLoginError("ログインに失敗しました。ニックネームとあいことばを確認してください。");
       }
   } catch (error) {
       console.error("Catch block triggered:", error);
@@ -54,7 +51,6 @@ export default function Login() {
   }
 };
     
-
     return (
         <>
         <TopBar />
@@ -67,9 +63,9 @@ export default function Login() {
                             <input
                                 type="text"
                                 id="name"
-                                placeholder="UranaiCatちゃん"
+                                placeholder="UranaiCat"
                                 value={loginName}
-                                onChange={(e) => setName(e.target.value)}
+                                onChange={(e) => setLoginName(e.target.value)}
                                 className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                         </div>
@@ -78,56 +74,21 @@ export default function Login() {
                             <input
                                 type="password"
                                 id="password"
-                                placeholder="あいことばを入力"
+                                placeholder="ヒミツのあいことば"
                                 value={loginPass}
                                 onChange={(e) => setLoginPass(e.target.value)}
                                 className="w-full p-3 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                         </div>
-                        <Link href="/start">
                             <div className="text-center mt-5">
                                 <button type="submit" className="w-full bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 transition">
                                     ログイン
                                 </button>
                         </div>
-                        </Link>
                     </form>
-            {/*<div className="min-h-screen flex items-center justify-center pt-12 pb-8">
-                <div className="max-w-2xl w-full bg-white shadow-md rounded-lg p-6">
-                <h1 className="text-2xl font-bold text-center mb-10">ログインフォーム</h1>
-                    <form onSubmit={handleLogin} className="flex flex-col items-center space-y-4">
-                    <label htmlFor="name" className="text-lg">ニックネーム</label>
-                    <input
-                        type="text"
-                        id="name"
-                        placeholder="UranaiCatちゃん"
-                        value={loginName}
-                        onChange={(e) => setLoginName(e.target.value)}
-                        className="border border-gray-300 p-2 rounded w-64"
-                    />
-                    <label htmlFor="password" className="text-lg">
-                        あいことば
-                    </label>
-                    <input
-                        type="password"
-                        id="password"
-                        placeholder="あいことばを入力"
-                        value={loginPass}
-                        onChange={(e) => setLoginPass(e.target.value)}
-                        className="border border-gray-300 p-2 rounded w-64"
-                    />
-                    <Link href="/start">
-                        <div className="text-center">
-                            <button type="submit" className="w-full bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 transition">
-                                ログイン
-                            </button>
-                        </div>
-                    </Link>
-
-                    {loginError && <div className="text-red-500">{loginError}</div>}
-                    {loginSuccess && <div className="text-green-500">{loginSuccess}</div>}
-                    </form> */}
                     <div className="mt-6 text-center">
+                        {loginSuccess ? (<div>{loginSuccess}</div>): (<></>)}
+                        {loginError ? (<div>{loginError}</div>): (<></>)}
                         <Link href="/" className="text-blue-500 hover:underline">トップページに戻る</Link>
                     </div>
                 </div>

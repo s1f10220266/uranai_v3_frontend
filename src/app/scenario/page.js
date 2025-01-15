@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 
 export default function Scenario() {
   const { typeResult, scenarioResult, inputJob, resetTypeContext, saveInputJob, saveScenarioResult } = useType();
+  const { uranaiUser, isLoggedIn, setUranaiUser } = useAuth();
   const router = useRouter();
   const [anotherJob, setAnotherJob] = useState("");
   const [createAgainErr, setCreateAgainErr] = useState("");
@@ -35,14 +36,14 @@ export default function Scenario() {
     setOkAgain(true);
     saveInputJob(anotherJob); // 新しいなりたい職業を保存
 
-
+    if (!isLoggedIn) setUranaiUser("");
     try {
       const response = await fetch("https://uranai-backend-v3.onrender.com/api/scenario", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ type: typeResult, job: anotherJob }),
+        body: JSON.stringify({ type: typeResult, job: anotherJob, name: uranaiUser }),
       });
 
       if (!response.ok) {
@@ -110,9 +111,6 @@ export default function Scenario() {
                 className="h-12 px-4 mr-5 bg-blue-300 text-black rounded shadow hover:bg-blue-400">
                 シナリオ再生成
               </button>
-              {/* <button onClick={handleResetAll} className="z-10 pr-2">
-                  <span>おしまい</span>
-                </button> */}
               <div className="group relative inline-flex h-[calc(48px+8px)] items-center justify-center rounded-full bg-neutral-950 py-1 pl-6 pr-14 font-medium text-neutral-50">
               <button onClick={handleResetAll} className="z-10 pr-2"><span className="">おしまい</span></button>
                 <div className="absolute right-1 inline-flex h-12 w-12 items-center justify-end rounded-full bg-neutral-700 transition-[width] group-hover:w-[calc(100%-8px)]">
