@@ -87,24 +87,20 @@ export default function Scenario() {
     <div className="text-xl font-bold text-gray-700">あなたのシナリオ</div>
     <div className="justify-center flex items-center">
     <div className="text-lg text-gray-800">
-  {scenarioResult ? (
-    scenarioResult.split("\n").map((line, index) => (
-      <React.Fragment key={index}>
-        {line}
-        <br />
-      </React.Fragment>
-    ))
-  ) : (
-    <span>シナリオ生成中</span>
-  )}
-</div>
+      {scenarioResult ? (
+        scenarioResult.split("\n").map((line, index) => (
+          <React.Fragment key={index}>
+            {line}
+            <br />
+          </React.Fragment>
+        ))
+      ) : (
+        <span>シナリオ生成中</span>
+      )}
     </div>
-  </div>
-            {/* 右側の画像 */}
-            {/* <div className="flex-shrink-0">
-              <img src="img/uranaiCat.jpg" className="w-40 h-40 object-cover rounded-lg"/>
-            </div> */}
-          </div>
+        </div>
+      </div>
+      </div>
           <div className="flex flex-col items-start space-y-4 pb-10">
             <div className="flex flex-row items-center">
               <label className="text-2xl flex items-center">
@@ -155,16 +151,6 @@ export default function Scenario() {
                 <div>{createAgainErr}</div>
               )}
             </div>
-            {/* <div>
-              {ok ? (
-                <div className="flex items-center text-2xl text-green-500 pb-10">
-                  <Image src="/img/catFortuneTelling.gif" style={{ width: '150px', height: 'auto' }} alt="占い猫" />
-                  <span>URANAICatさんが占いを開始しました！少しお待ちください。</span>
-                </div>
-              ) : (
-                <div className="text-2xl pb-10">ボタンを押して占いを開始しましょう！</div>
-              )}
-            </div> */}
           </div>
       </div>
     </>

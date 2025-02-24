@@ -29,13 +29,14 @@ export default function Personality() {
       setScenarioError("なりたい職業を入力してください！");
       return;
     }
+    const userName = uranaiUser || "";
     setOk(true);
     saveInputJob(userJob);
-    console.log("name", uranaiUser);
+    console.log("name", userName);
     console.log("type", typeResult);
     console.log("job", userJob);
 
-    if (!isLoggedIn) setUranaiUser("");
+    
 
     try {
       const response = await fetch("https://uranai-backend-v3.onrender.com/api/scenario", {
@@ -43,7 +44,7 @@ export default function Personality() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ type: typeResult, job: userJob, name: uranaiUser }),
+        body: JSON.stringify({ type: typeResult, job: userJob, name: userName }),
       });
 
       if (!response.ok) {
@@ -73,11 +74,18 @@ export default function Personality() {
         <div className="text-5xl font-bold text-blue-600">{typeResult}</div>
         <BoxedText>
           {typeExplain ? (
-            <div className="text-2xl text-center max-w-xl">{typeExplain}</div>
+            <div className="text-2xl text-center max-w-xl">
+              {typeExplain.split("\n").map((line, index) => (
+                <React.Fragment key={index}>
+                  {line}
+                  <br />
+                </React.Fragment>
+              ))}
+            </div>
           ) : (
             <div className="flex items-center space-x-2 text-4xl">
-            <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-blue-500"></div>
-            <div className="animate-bounce text-gray-500">...分析中...</div>
+              <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-blue-500"></div>
+              <div className="animate-bounce text-gray-500">...分析中...</div>
             </div>
           )}
         </BoxedText>
