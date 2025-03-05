@@ -1,7 +1,7 @@
 "use client";
 
 import TopBar from "../components/TopBar";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useType } from "../contexts/TypeContext";
 import { useAuth } from "../contexts/AuthContext";
 import { useRouter } from "next/navigation";
@@ -10,7 +10,7 @@ import Image from 'next/image';
 export default function Personality() {
   const router = useRouter();
   const { typeResult, typeExplain, saveScenarioResult, saveInputJob } = useType();
-  const { uranaiUser, isLoggedIn, setUranaiUser } = useAuth();
+  const { uranaiUser } = useAuth();
   const [userJob, setUserJob] = useState("");
   const [scenarioError, setScenarioError] = useState("");
   const [ok, setOk] = useState(false);
@@ -29,14 +29,14 @@ export default function Personality() {
       setScenarioError("なりたい職業を入力してください！");
       return;
     }
+
     const userName = uranaiUser || "";
     setOk(true);
     saveInputJob(userJob);
-    console.log("name", userName);
-    console.log("type", typeResult);
-    console.log("job", userJob);
 
-    
+    // console.log("name", userName);
+    // console.log("type", typeResult);
+    // console.log("job", userJob);
 
     try {
       const response = await fetch("https://uranai-backend-v3.onrender.com/api/scenario", {
@@ -52,7 +52,7 @@ export default function Personality() {
       }
 
       const result = await response.json();
-      console.log("Scenario API Response:", result);
+      // console.log("Scenario API Response:", result);
 
       if (result.scenario) {
         saveScenarioResult(result.scenario);

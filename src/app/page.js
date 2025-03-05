@@ -6,7 +6,6 @@ import TopBar from './components/TopBar';
 import { useAuth } from "./contexts/AuthContext";
 
 export default function Home() {
-  const [action, setAction] = useState(null);
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [loginError, setLoginError] = useState("");
   const [loginName, setLoginName] = useState("");
@@ -15,9 +14,7 @@ export default function Home() {
   
 
   const [showLoginForm, setShowLoginForm] = useState(false);
-  const handleIntroBtnClick = (n) => {
-    setAction(n);
-  };
+
 
   const handleLogin = async (e) => {
     e.preventDefault(); // ページ遷移を防ぐ
@@ -41,7 +38,7 @@ export default function Home() {
   
       console.log("Raw response:", response);
   
-      const result = await response.json(); // ここで例外が発生する可能性あり
+      const result = await response.json();
       console.log("Parsed response JSON:", result);
   
       if (response.ok && result.loginSuccess) {
@@ -132,8 +129,6 @@ export default function Home() {
             </form>
             )}
           </div>
-
-          {/* <Link href="/account">アカウント</Link> */}
 
   
           {!showLoginForm && (

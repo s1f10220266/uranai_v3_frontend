@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import React, { useState } from 'react';
-import Link from 'next/link';
 import { useAuth } from "../contexts/AuthContext";
 import { useType } from "../contexts/TypeContext";
 import TopBar from "../components/TopBar";
@@ -50,7 +49,7 @@ export default function Scenario() {
       }
 
       const result = await response.json();
-      console.log("Scenario API Response:", result);
+      // console.log("Scenario API Response:", result);
 
       if (result.scenario) {
         saveScenarioResult(result.scenario);

@@ -10,7 +10,7 @@ export default function Login() {
   const [loginError, setLoginError] = useState("");
   const [loginName, setLoginName] = useState("");
   const [loginPass, setLoginPass] = useState("");
-  const { login, isLoggedIn, logout, setIsLoggedIn } = useAuth();
+  const { login, logout, setIsLoggedIn } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault(); // ページ遷移を防ぐ
@@ -34,7 +34,7 @@ export default function Login() {
   
       console.log("Raw response:", response);
   
-      const result = await response.json(); // ここで例外が発生する可能性あり
+      const result = await response.json();
       console.log("Parsed response JSON:", result);
   
       if (response.ok && result.loginSuccess) {
@@ -45,11 +45,11 @@ export default function Login() {
             logout();
           setLoginError("ログインに失敗しました。ニックネームとあいことばを確認してください。");
       }
-  } catch (error) {
-      console.error("Catch block triggered:", error);
-      setLoginError("エラーが発生しました。ログインできません。");
-  }
-};
+    } catch (error) {
+        console.error("Catch block triggered:", error);
+        setLoginError("エラーが発生しました。ログインできません。");
+    }
+    };
     
     return (
         <>

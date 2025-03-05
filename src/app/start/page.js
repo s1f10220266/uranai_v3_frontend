@@ -5,13 +5,11 @@ import Link from 'next/link';
 import TopBar from '../components/TopBar';
 import { useAuth } from "../contexts/AuthContext";
 import { useType } from "../contexts/TypeContext";
-import { useRouter } from "next/navigation";
 
 
 export default function Start() {
-const router = useRouter();    
 const typeAPI = "https://uranai-backend-v3.onrender.com/api/type";
-const { uranaiUser, isLoggedIn } = useAuth();
+const { uranaiUser } = useAuth();
 const {saveTypeResult, saveTypeExplain} = useType();
 const [withoutQuiz, setWithoutQuiz] = useState("");
 
@@ -142,7 +140,7 @@ const [withoutQuiz, setWithoutQuiz] = useState("");
         <div className='grid grid-cols-1 sm:grid-cols-2 gap-10'>
         </div>
             <div className="flex space-x-2 mb-4">
-                <div className="">
+                <div>
                     <p className='text-xl -ml-15'>質問数を選んで質問に回答してください！</p>
                     <div className="ml-20">
                         <button className="bg-white border border-gray-300 rounded-md px-4 py-2 h-12 hover:bg-gray-100" onClick={() => handleQuestionEvent(4)}>4問</button>
@@ -150,7 +148,7 @@ const [withoutQuiz, setWithoutQuiz] = useState("");
                         <button className="bg-white border border-gray-300 rounded-md px-4 py-2 h-12 hover:bg-gray-100" onClick={() => handleQuestionEvent(16)}>16問</button>
                     </div>
                 </div>
-                <div className="">
+                <div>
                   <div>
                     <label className="text-xl ml-12">自分の性格タイプを知っている人は・・・​</label>
                   </div>
